@@ -1,0 +1,8 @@
+.idea/
+data/typesense-data/db/*
+data/typesense-data/meta/*
+data/typesense-data/state/log/*
+data/typesense-data/state/snapshot/*
+data/typesense-data/state/meta/*
+.env
+venv/
