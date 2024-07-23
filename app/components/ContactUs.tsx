@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import axios from 'axios';
-import { ContactUsProps } from '../../app/types'; // Adjust the path as needed
+import { ContactUsProps } from '../types';
 
 const ContactUs: React.FC<ContactUsProps> = ({ onClose }) => {
   const [name, setName] = useState('');

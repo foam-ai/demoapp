@@ -2,7 +2,7 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { getProductData } from '@/app/utils/getProductData';
-import { ProductData } from '../types';
+import { ProductData } from "@/app/types";
 
 type ProductContextType = {
   applicationMap: Record<string, { title: string; url: string }[]>;

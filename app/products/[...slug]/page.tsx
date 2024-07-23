@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { ProductData } from '../../../app/types';
+import { ProductData} from "@/app/types";
 import ProductPageClient from './ProductPageClient';
 
 interface ProductPageProps {

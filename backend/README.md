@@ -1,1 +1,0 @@
-# solspace-backend

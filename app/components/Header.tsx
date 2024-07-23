@@ -1,43 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useUser, UserProvider } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import '@/app/styles/globals.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faSignInAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-// import { faSearch, faUser, faShoppingCart, faSignInAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-
-const LoginButton = () => {
-  return (
-    <Link href="/api/auth/login" className="flex items-center text-black hover:text-gray-600">
-      <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
-      Login
-    </Link>
-  );
-};
-
-const AuthenticationButton = () => {
-  const { user, error, isLoading } = useUser();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
-
-  return user ? (
-    <div className="flex space-x-4">
-      <Link href="/account" className="flex items-center text-black hover:text-gray-600">
-        <FontAwesomeIcon icon={faUser} className="mr-2" />
-        Account
-      </Link>
-      <Link href="/requests" className="flex items-center text-black hover:text-gray-600">
-        <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
-        RFQs
-      </Link>
-    </div>
-  ) : (
-    <LoginButton />
-  );
-};
+import { faSearch, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({
   openContactModal,
@@ -50,7 +17,6 @@ const Header = ({
   const router = useRouter();
   const [topApplications, setTopApplications] = useState<string[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
 
   useEffect(() => {
     console.log('applicationMap:', applicationMap);
@@ -65,7 +31,7 @@ const Header = ({
   };
 
   return (
-<header className="flex flex-col items-center p-4 bg-blue-400 custom-header-height">
+    <header className="flex flex-col items-center p-4 bg-blue-400 custom-header-height">
       <div className="flex justify-between items-center w-full mb-2">
         <div className="text-5xl font-bold text-gray-800">
           <Link href="/" className="no-underline text-black hover:text-gray-800 focus:text-gray-800 visited:text-gray-800 hover:no-underline">
@@ -80,34 +46,27 @@ const Header = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        <button
-          type="submit"
-          className="p-2 bg-yellow-500 text-white rounded-r hover:bg-yellow-500"
-        >
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
+          <button
+            type="submit"
+            className="p-2 bg-yellow-500 text-white rounded-r hover:bg-yellow-500"
+          >
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
         </form>
         <div className="flex space-x-4">
-          <UserProvider>
-            <AuthenticationButton />
-            {/* <Link href="/cart" className="flex items-center text-gray-700 hover:text-blue-600">
-              <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
-              Cart
-            </Link> */}
-            <button onClick={openContactModal} className="flex items-center text-black hover:text-gray-600">
-              <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
-              Contact Us
-            </button>
-          </UserProvider>
+          <button onClick={openContactModal} className="flex items-center text-black hover:text-gray-600">
+            <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
+            Contact Us
+          </button>
         </div>
       </div>
       <div className="text-4xl font-bold text-black mt-2 mb-2">
-        SHOP ALL YOUR ROBOTS WITH ONE CLICK
+        SHOP ALL OF YOUR ROBOTS WITH ONE CLICK
       </div>
       <nav className="flex space-x-4">
         {topApplications.map((application) => (
-          <div 
-            key={application} 
+          <div
+            key={application}
             className="relative group"
             onMouseEnter={() => setActiveDropdown(application)}
             onMouseLeave={() => setActiveDropdown(null)}
@@ -126,8 +85,8 @@ const Header = ({
                     `}>
                       {applicationMap[application]?.map((product) => (
                         <li key={product.title}>
-                          <Link 
-                            href={product.url} 
+                          <Link
+                            href={product.url}
                             className="block px-4 py-2 text-gray-800 hover:bg-gray-300 hover:text-gray-800 hover:no-underline whitespace-nowrap"
                           >
                             {product.title}
