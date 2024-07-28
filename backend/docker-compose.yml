@@ -6,11 +6,12 @@ services:
       - "8080:8080"
     depends_on:
       - typesense
+      - promtail
     env_file:
       - .env
     volumes:
       - .:/app
-    # Removed the /var/log/myapp volume as we're now logging to stdout
+      - /var/log/myapp:/var/log/myapp
 
   typesense:
     image: typesense/typesense:0.23.1
@@ -24,5 +25,5 @@ services:
     image: grafana/promtail:main
     volumes:
       - ./promtail:/etc/promtail
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/log/myapp:/var/log/myapp
     command: -config.file=/etc/promtail/config.yaml
