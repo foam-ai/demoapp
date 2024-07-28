@@ -28,6 +28,10 @@ app.include_router(contactus.router)
 app.include_router(quotes.router)
 
 
+@app.head("/")
+def read_root():
+    return {"Hello": "World"}
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
