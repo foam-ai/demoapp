@@ -5,6 +5,7 @@ from datetime import datetime
 import logging
 
 router = APIRouter()
+logger = logging.getLogger("myapp")
 
 
 @router.post("/quotes")
@@ -22,8 +23,8 @@ async def submit_quote(submission: QuoteSubmission):
     }
     try:
         result = typesenseClient.collections['quotes'].documents.create(quote)
-        logging.info("Quote request submitted successfully")
+        logger.info("Quote request submitted successfully")
         return {"message": "Quote request submitted successfully", "data": result}
     except Exception as exc:
-        logging.error(f"Quote request submission error: {str(exc)}")
+        logger.error(f"Quote request submission error: {str(exc)}")
         raise HTTPException(status_code=500, detail=str(exc))
