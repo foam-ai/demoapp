@@ -1,0 +1,29 @@
+from fastapi import APIRouter, HTTPException
+from app.utils.typesense_client import typesenseClient
+from app.utils.models import QuoteSubmission
+from datetime import datetime
+import logging
+
+router = APIRouter()
+
+
+@router.post("/quotes")
+async def submit_quote(submission: QuoteSubmission):
+    quote = {
+        "product_name": submission.product_name,
+        "condition": submission.condition,
+        "email": submission.email,
+        "phone_number": submission.phone_number,
+        "name": submission.name,
+        "company_name": submission.company_name,
+        "message": submission.message,
+        "zipcode": submission.zipcode,
+        "created_at": int(datetime.utcnow().timestamp())
+    }
+    try:
+        result = typesenseClient.collections['quotes'].documents.create(quote)
+        logging.info("Quote request submitted successfully")
+        return {"message": "Quote request submitted successfully", "data": result}
+    except Exception as exc:
+        logging.error(f"Quote request submission error: {str(exc)}")
+        raise HTTPException(status_code=500, detail=str(exc))
