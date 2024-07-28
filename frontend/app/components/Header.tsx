@@ -35,7 +35,7 @@ const Header = ({
       <div className="flex justify-between items-center w-full mb-2">
         <div className="text-5xl font-bold text-gray-800">
           <Link href="/" className="no-underline text-black hover:text-gray-800 focus:text-gray-800 visited:text-gray-800 hover:no-underline">
-            ROBOTS, INC.
+            ROBOTSgi
           </Link>
         </div>
         <form onSubmit={handleSearch} className="flex w-full max-w-5xl mx-6">
