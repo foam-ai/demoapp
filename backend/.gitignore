@@ -13,7 +13,7 @@ data/*
 .LSOverride
 app/routers/__pycache__/
 app/__pycache__/
-app/root_cause/__pycache__/
+app/utils/__pycache__/
 
 github_diffs/
 grafana_images/
