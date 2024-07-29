@@ -27,11 +27,7 @@ services:
   promtail:
     image: grafana/promtail:main
     volumes:
-      - ./promtail/config.yaml:/etc/promtail/config.yaml
+      - ./promtail:/etc/promtail
       - /var/log/myapp:/var/log/myapp
     command: -config.file=/etc/promtail/config.yaml
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9080/ready" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+
