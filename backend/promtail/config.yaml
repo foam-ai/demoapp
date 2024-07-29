@@ -16,4 +16,3 @@ scrape_configs:
         labels:
           job: myapp
           __path__: /var/log/myapp/app.log
-
