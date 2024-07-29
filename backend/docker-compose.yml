@@ -26,5 +26,5 @@ services:
     image: grafana/promtail:main
     volumes:
       - ./promtail/config.yaml:/etc/promtail/config.yaml
-      - /var/log/myapp:/var/log/myapp
+      - /var/log/myapp:/var/log/myapp:ro
     command: -config.file=/etc/promtail/config.yaml
