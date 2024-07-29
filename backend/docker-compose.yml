@@ -13,6 +13,8 @@ services:
       - .:/app
       - /var/log/myapp:/var/log/myapp
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+    environment:
+      - LOG_PATH=/var/log/myapp/app.log
 
   typesense:
     image: typesense/typesense:0.23.1
@@ -22,15 +24,9 @@ services:
       - ./data/typesense-data:/data
     command: ["--data-dir", "/data", "--api-key", "YourTypesenseAPIKey", "--listen-port", "8108"]
 
-#  promtail:
-#    image: grafana/promtail:main
-#    volumes:
-#      - ./promtail/config.yaml:/etc/promtail/config.yaml
-#      - /var/log/myapp:/var/log/myapp:ro
-#    command: -config.file=/etc/promtail/config.yaml
-
   promtail:
-    build: ./promtail
+    image: grafana/promtail:main
     volumes:
+      - ./promtail/config.yaml:/etc/promtail/config.yaml
       - /var/log/myapp:/var/log/myapp
     command: -config.file=/etc/promtail/config.yaml
