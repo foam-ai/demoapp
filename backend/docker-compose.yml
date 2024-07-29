@@ -22,9 +22,15 @@ services:
       - ./data/typesense-data:/data
     command: ["--data-dir", "/data", "--api-key", "YourTypesenseAPIKey", "--listen-port", "8108"]
 
+#  promtail:
+#    image: grafana/promtail:main
+#    volumes:
+#      - ./promtail/config.yaml:/etc/promtail/config.yaml
+#      - /var/log/myapp:/var/log/myapp:ro
+#    command: -config.file=/etc/promtail/config.yaml
+
   promtail:
-    image: grafana/promtail:main
+    build: ./promtail
     volumes:
-      - ./promtail/config.yaml:/etc/promtail/config.yaml
-      - /var/log/myapp:/var/log/myapp:ro
+      - /var/log/myapp:/var/log/myapp
     command: -config.file=/etc/promtail/config.yaml
