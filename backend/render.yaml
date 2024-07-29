@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: demo-app
+    runtime: docker
+    repo: https://github.com/foam-ai/demo-app
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      - key: LOG_PATH
+        value: /var/log/myapp/app.log
+    disk:
+      name: app-logs
+      mountPath: /var/log/myapp
+      sizeGB: 1
+
+  - type: worker
+    name: promtail
+    runtime: docker
+    repo: https://github.com/foam-ai/demo-app
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: CONFIG_PATH
+        value: /app/promtail/config.yaml
+    disk:
+      name: app-logs
+      mountPath: /var/log/myapp
+      sizeGB: 1
+    startCommand: >
+      wget https://github.com/grafana/loki/releases/download/v2.8.0/promtail-linux-amd64.zip &&
+      unzip promtail-linux-amd64.zip &&
+      chmod a+x promtail-linux-amd64 &&
+      ./promtail-linux-amd64 -config.file=$CONFIG_PATH
