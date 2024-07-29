@@ -1,11 +1,10 @@
 from fastapi import APIRouter, HTTPException
 from app.utils.models import ContactSubmission
 from datetime import datetime
-import logging
+from app.utils.logger import logger
 from app.utils.typesense_client import typesenseClient
 
 router = APIRouter()
-logger = logging.getLogger("myapp")
 
 
 @router.post("/contactus")

@@ -2,10 +2,9 @@ from fastapi import APIRouter, HTTPException
 from app.utils.typesense_client import typesenseClient
 from app.utils.models import QuoteSubmission
 from datetime import datetime
-import logging
+from app.utils.logger import logger
 
 router = APIRouter()
-logger = logging.getLogger("myapp")
 
 
 @router.post("/quotes")

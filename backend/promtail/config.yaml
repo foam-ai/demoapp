@@ -5,22 +5,15 @@ server:
 positions:
   filename: /tmp/positions.yaml
 
-client:
-  url: https://932409:glc_eyJvIjoiMTE2NDY3NiIsIm4iOiJzdGFjay05NzQ2MjktaW50ZWdyYXRpb24tbG9raS1maXJzdC10b2tlbiIsImsiOiJOMnQ0azQwVzJDNWE2Zm4wM1JhT2FzMFMiLCJtIjp7InIiOiJwcm9kLXVzLWVhc3QtMCJ9fQ==@logs-prod-006.grafana.net/api/prom/push
+clients:
+  - url: https://954187:glc_eyJvIjoiMTE4MzY2NiIsIm4iOiJsb2tpLWFwaS1rZXktZmlyc3QtdG9rZW4iLCJrIjoiazFtejUxMjZWTHEzOGxUUjh5MDNodlpCIiwibSI6eyJyIjoidXMifX0=@logs-prod-006.grafana.net/loki/api/v1/push
 
 scrape_configs:
-  - job_name: system
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: varlogs
-          __path__: /var/log/*.log
-
-  - job_name: render
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: render
-          __path__: /var/log/myapp/app.log
+- job_name: app_logs
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: varlogs
+      service_name: myapp
+      __path__: /var/log/myapp/*.log
