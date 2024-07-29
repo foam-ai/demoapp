@@ -9,10 +9,18 @@ clients:
   - url: https://954187:glc_eyJvIjoiMTE4MzY2NiIsIm4iOiJsb2tpLWFwaS1rZXktZmlyc3QtdG9rZW4iLCJrIjoiazFtejUxMjZWTHEzOGxUUjh5MDNodlpCIiwibSI6eyJyIjoidXMifX0=@logs-prod-006.grafana.net/loki/api/v1/push
 
 scrape_configs:
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*.log
+
   - job_name: myapp
     static_configs:
       - targets:
-          - app
+          - app:8080
         labels:
           job: myapp
           __path__: /var/log/myapp/app.log
