@@ -9,21 +9,28 @@ router = APIRouter()
 
 @router.post("/quotes")
 async def submit_quote(submission: QuoteSubmission):
+    endpoint = "/quotes"
     quote = {
-        "product_name": submission.product_name,
-        "condition": submission.condition,
-        "email": submission.email,
-        "phone_number": submission.phone_number,
-        "name": submission.name,
-        "company_name": submission.company_name,
-        "message": submission.message,
-        "zipcode": submission.zipcode,
-        "created_at": int(datetime.utcnow().timestamp())
+        "endpoint": endpoint,
+        "status": "success",
+        "data": {
+            "product_name": submission.product_name,
+            "condition": submission.condition,
+            "email": submission.email,
+            "phone_number": submission.phone_number,
+            "name": submission.name,
+            "company_name": submission.company_name,
+            "message": submission.message,
+            "zipcode": submission.zipcode,
+            "created_at": int(datetime.utcnow().timestamp())
+        }
     }
     try:
-        result = typesenseClient.collections['quotes'].documents.create(quote)
-        logger.info("Quote request submitted successfully")
+        result = typesenseClient.collections['quotes'].documents.create(quote['data'])
+        logger.info(quote)
         return {"message": "Quote request submitted successfully", "data": result}
     except Exception as exc:
-        logger.error(f"Quote request submission error: {str(exc)}")
+        quote["status"] = "error"
+        quote["error"] = str(exc)
+        logger.error(quote)
         raise HTTPException(status_code=500, detail=str(exc))

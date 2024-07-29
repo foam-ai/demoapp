@@ -9,18 +9,24 @@ router = APIRouter()
 
 @router.post("/contactus")
 async def submit_contact(submission: ContactSubmission):
+    endpoint = "/contactus"
     contact = {
-        "name": submission.name,
-        "email": submission.email,
-        "phone_number": submission.phone_number,
-        "message": submission.message,
-        "created_at": int(datetime.utcnow().timestamp())
+        "endpoint": endpoint,
+        "status": "success",
+        "data": {
+            "name": submission.name,
+            "email": submission.email,
+            "phone_number": submission.phone_number,
+            "message": submission.message,
+            "created_at": int(datetime.utcnow().timestamp())
+        }
     }
     try:
-        result = typesenseClient.collections['contactus'].documents.create(contact)
-        logger.info("Contact form submitted successfully")
-        raise Exception("Oopsie")
-        # return {"message": "Contact us form submitted successfully", "data": result}
+        result = typesenseClient.collections['contactus'].documents.create(contact['data'])
+        logger.info(contact)
+        return {"message": "Contact us form submitted successfully", "data": result}
     except Exception as exc:
-        logger.error(f"Contact us form submission error: {str(exc)}")
+        contact["status"] = "error"
+        contact["error"] = str(exc)
+        logger.error(contact)
         raise HTTPException(status_code=500, detail=str(exc))
