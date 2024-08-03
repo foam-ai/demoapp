@@ -24,7 +24,7 @@ async def submit_contact(submission: ContactSubmission):
     try:
         result = typesenseClient.collections['contactus'].documents.create(contact['data'])
         logger.info(contact)
-        return {"message": "Contact us form submitted successfully", "data": result}
+        # return {"message": "Contact us form submitted successfully", "data": result}
         raise Exception("oopsie")
     except Exception as exc:
         contact["status"] = "error"
