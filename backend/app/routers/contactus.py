@@ -18,16 +18,13 @@ async def submit_contact(submission: ContactSubmission):
             "email": submission.email,
             "phone_number": submission.phone_number,
             "message": submission.message,
+            "created_at": int(datetime.utcnow().timestamp())
         }
     }
     try:
-        logger.info("This is a log message from contact us endpoint")
         result = typesenseClient.collections['contactus'].documents.create(contact['data'])
-        logger.info(contact)
         return {"message": "Contact us form submitted successfully", "data": result}
     except Exception as exc:
         contact["status"] = "error"
         contact["error"] = str(exc)
-        logger.error(contact)
-        logger.error("This is an error message from contact us endpoint")
         raise HTTPException(status_code=500, detail=str(exc))
