@@ -17,7 +17,8 @@ async def submit_contact(submission: ContactSubmission):
             "name": submission.name,
             "email": submission.email,
             "phone_number": submission.phone_number,
-            "message": submission.message
+            "message": submission.message,
+            "created_at": datetime.utcnow()  # Adding the missing created_at field
         }
     }
     try:
