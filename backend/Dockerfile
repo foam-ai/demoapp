@@ -22,5 +22,5 @@ COPY promtail/config.yaml /etc/promtail/config.yaml
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-# Run uvicorn server and Promtail when the container launches
+# Start uvicorn server and Promtail simultaneously
 CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port 8080 & promtail -config.file=/etc/promtail/config.yaml"]
