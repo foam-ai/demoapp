@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.utils.typesense_client import typesenseClient
 from app.utils.models import QuoteSubmission
-from app.utils.logger import log_metric
+from app.utils.logger import logger
 from datetime import datetime
 import requests
 import os
@@ -13,7 +13,6 @@ load_dotenv()
 third_party_client_host_url = os.getenv('THIRD_PARTY_CLIENT_HOST_URL')
 
 router = APIRouter()
-
 
 @router.post("/quotes")
 async def submit_quote(submission: QuoteSubmission):
@@ -34,8 +33,6 @@ async def submit_quote(submission: QuoteSubmission):
         }
     }
     try:
-        result = typesenseClient.collections['quotes'].documents.create(quote['data'])
-
         if not third_party_client_host_url:
             raise ValueError("THIRD_PARTY_CLIENT_HOST_URL is not set in the environment variables")
 
@@ -52,21 +49,32 @@ async def submit_quote(submission: QuoteSubmission):
         finally:
             end_time = time.time()
             latency = (end_time - start_time) * 1000  # Convert to milliseconds
-            log_metric("ownership_endpoint_latency", latency, "ms", {
+            logger.info({
+                "metric": "ownership_endpoint_latency",
+                "value": latency,
+                "unit": "ms",
                 "status": ownership_response.status_code
             })
 
-        log_metric("quote_submission_success", 1, "count")
-        return {
-            "message": "Quote request submitted successfully",
-            "data": result
-        }
+        result = typesenseClient.collections['quotes'].documents.create(quote['data'])
+        logger.info(quote)
+        logger.info("Quote submission successful")
+        return {"message": "Quote request submitted successfully", "data": result}
     except ValueError as ve:
-        log_metric("configuration_error", 1, "count", {"error": str(ve)})
+        quote["status"] = "error"
+        quote["error"] = f"Configuration error: {str(ve)}"
+        logger.error(quote)
+        logger.error("Configuration error in the quotes endpoint")
         raise HTTPException(status_code=500, detail=str(ve))
     except requests.RequestException as req_exc:
-        log_metric("ownership_endpoint_error", 1, "count", {"error": str(req_exc)})
+        quote["status"] = "error"
+        quote["error"] = f"Ownership endpoint error: {str(req_exc)}"
+        logger.error(quote)
+        logger.error("Ownership endpoint error in the quotes endpoint")
         raise HTTPException(status_code=500, detail=str(req_exc))
     except Exception as exc:
-        log_metric("quote_submission_error", 1, "count", {"error": str(exc)})
+        quote["status"] = "error"
+        quote["error"] = str(exc)
+        logger.error(quote)
+        logger.error("An error in the quotes endpoint has occurred")
         raise HTTPException(status_code=500, detail=str(exc))
