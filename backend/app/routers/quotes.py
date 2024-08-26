@@ -49,32 +49,24 @@ async def submit_quote(submission: QuoteSubmission):
         finally:
             end_time = time.time()
             latency = (end_time - start_time) * 1000  # Convert to milliseconds
-            logger.info({
-                "metric": "ownership_endpoint_latency",
-                "value": latency,
-                "unit": "ms",
-                "status": ownership_response.status_code
-            })
+            quote["ownership_check_latency"] = f"{latency:.2f}ms"
+            quote["ownership_check_status"] = ownership_response.status_code
 
         result = typesenseClient.collections['quotes'].documents.create(quote['data'])
         logger.info(quote)
-        logger.info("Quote submission successful")
         return {"message": "Quote request submitted successfully", "data": result}
     except ValueError as ve:
         quote["status"] = "error"
         quote["error"] = f"Configuration error: {str(ve)}"
         logger.error(quote)
-        logger.error("Configuration error in the quotes endpoint")
         raise HTTPException(status_code=500, detail=str(ve))
     except requests.RequestException as req_exc:
         quote["status"] = "error"
         quote["error"] = f"Ownership endpoint error: {str(req_exc)}"
         logger.error(quote)
-        logger.error("Ownership endpoint error in the quotes endpoint")
         raise HTTPException(status_code=500, detail=str(req_exc))
     except Exception as exc:
         quote["status"] = "error"
         quote["error"] = str(exc)
         logger.error(quote)
-        logger.error("An error in the quotes endpoint has occurred")
         raise HTTPException(status_code=500, detail=str(exc))
