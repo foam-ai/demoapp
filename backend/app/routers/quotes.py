@@ -14,8 +14,10 @@ third_party_client_host_url = os.getenv('THIRD_PARTY_CLIENT_HOST_URL')
 
 router = APIRouter()
 
+
 @router.post("/quotes")
 async def submit_quote(submission: QuoteSubmission):
+    endpoint_start_time = time.time()
     endpoint = "/quotes"
     quote = {
         "endpoint": endpoint,
@@ -42,17 +44,22 @@ async def submit_quote(submission: QuoteSubmission):
             "phone_number": submission.phone_number
         }
 
-        start_time = time.time()
+        ownership_start_time = time.time()
         try:
             ownership_response = requests.post(check_ownership_url, json=ownership_check_data, timeout=10)
             ownership_response.raise_for_status()
         finally:
-            end_time = time.time()
-            latency = (end_time - start_time) * 1000  # Convert to milliseconds
-            quote["ownership_check_latency"] = f"{latency:.2f}ms"
+            ownership_end_time = time.time()
+            ownership_latency = (ownership_end_time - ownership_start_time) * 1000  # Convert to milliseconds
+            quote["ownership_check_latency"] = f"{ownership_latency:.2f}ms"
             quote["ownership_check_status"] = ownership_response.status_code
 
         result = typesenseClient.collections['quotes'].documents.create(quote['data'])
+
+        endpoint_end_time = time.time()
+        total_latency = (endpoint_end_time - endpoint_start_time) * 1000  # Convert to milliseconds
+        quote["total_endpoint_latency"] = f"{total_latency:.2f}ms"
+
         logger.info(quote)
         return {"message": "Quote request submitted successfully", "data": result}
     except ValueError as ve:
@@ -70,3 +77,9 @@ async def submit_quote(submission: QuoteSubmission):
         quote["error"] = str(exc)
         logger.error(quote)
         raise HTTPException(status_code=500, detail=str(exc))
+    finally:
+        if "total_endpoint_latency" not in quote:
+            endpoint_end_time = time.time()
+            total_latency = (endpoint_end_time - endpoint_start_time) * 1000
+            quote["total_endpoint_latency"] = f"{total_latency:.2f}ms"
+        logger.info(quote)
