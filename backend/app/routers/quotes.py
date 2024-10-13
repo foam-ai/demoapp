@@ -35,25 +35,6 @@ async def submit_quote(submission: QuoteSubmission):
         }
     }
     try:
-        if not third_party_client_host_url:
-            raise ValueError("THIRD_PARTY_CLIENT_HOST_URL is not set in the environment variables")
-
-        check_ownership_url = f"{third_party_client_host_url}/check_phone_number_ownership"
-        ownership_check_data = {
-            "name": submission.name,
-            "phone_number": submission.phone_number
-        }
-
-        ownership_start_time = time.time()
-        try:
-            ownership_response = requests.post(check_ownership_url, json=ownership_check_data, timeout=10)
-            ownership_response.raise_for_status()
-        finally:
-            ownership_end_time = time.time()
-            ownership_latency = (ownership_end_time - ownership_start_time) * 1000  # Convert to milliseconds
-            quote["ownership_check_latency"] = f"{ownership_latency:.2f}ms"
-            quote["ownership_check_status"] = ownership_response.status_code
-
         result = typesenseClient.collections['quotes'].documents.create(quote['data'])
 
         endpoint_end_time = time.time()
