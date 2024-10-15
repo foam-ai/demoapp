@@ -11,6 +11,12 @@ typesense_port = os.getenv('TYPESENSE_PORT')
 typesense_protocol = os.getenv('TYPESENSE_PROTOCOL')
 typesense_api_key = os.getenv('TYPESENSE_ADMIN_API_KEY')
 
+print("CREDS")
+print("HOST", typesense_host)
+print("PORT", typesense_port)
+print("PROTOCOL", typesense_protocol)
+print("API_KEY", typesense_api_key)
+
 # Initialize Typesense client
 typesenseClient = typesense.Client({
     'nodes': [{

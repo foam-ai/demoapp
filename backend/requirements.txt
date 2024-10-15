@@ -59,3 +59,4 @@ attrs~=23.2.0
 packaging~=24.1
 python-logging-loki
 python-jose[cryptography]
+sentry-sdk
