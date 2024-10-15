@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from app.utils.models import ContactSubmission
 from datetime import datetime
 from app.utils.logger import logger
-from app.utils.typesense_client import typesenseClient
+# from app.utils.typesense_client import typesenseClient
 
 router = APIRouter()
 
@@ -23,7 +23,8 @@ async def submit_contact(submission: ContactSubmission):
     }
     try:
         logger.info("contact us")
-        result = typesenseClient.collections['contactus'].documents.create(contact['data'])
+        # result = typesenseClient.collections['contactus'].documents.create(contact['data'])
+        result = "blah"
         logger.info(contact)
         return {"message": "Contact us form submitted successfully", "data": result}
     except Exception as exc:

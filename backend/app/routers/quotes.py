@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.utils.typesense_client import typesenseClient
+# from app.utils.typesense_client import typesenseClient
 from app.utils.models import QuoteSubmission
 from app.utils.logger import logger
 from datetime import datetime
@@ -35,8 +35,8 @@ async def submit_quote(submission: QuoteSubmission):
         }
     }
     try:
-        result = typesenseClient.collections['quotes'].documents.create(quote['data'])
-
+        # result = typesenseClient.collections['quotes'].documents.create(quote['data'])
+        result = "blah"
         endpoint_end_time = time.time()
         total_latency = (endpoint_end_time - endpoint_start_time) * 1000  # Convert to milliseconds
         quote["total_endpoint_latency"] = f"{total_latency:.2f}ms"
