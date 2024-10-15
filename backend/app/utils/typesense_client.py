@@ -1,6 +1,11 @@
 import typesense
 import os
 from dotenv import load_dotenv
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 # Load environment variables from .env file (if you're using one)
 load_dotenv()
@@ -11,11 +16,11 @@ typesense_port = os.getenv('TYPESENSE_PORT')
 typesense_protocol = os.getenv('TYPESENSE_PROTOCOL')
 typesense_api_key = os.getenv('TYPESENSE_ADMIN_API_KEY')
 
-print("CREDS")
-print("HOST", typesense_host)
-print("PORT", typesense_port)
-print("PROTOCOL", typesense_protocol)
-print("API_KEY", typesense_api_key)
+logger.debug(f"TYPESENSE_HOST: {typesense_host}")
+logger.debug(f"TYPESENSE_PORT: {typesense_port}")
+logger.debug(f"TYPESENSE_PROTOCOL: {typesense_protocol}")
+logger.debug(f"TYPESENSE_ADMIN_API_KEY: {'*' * len(typesense_api_key) if typesense_api_key else 'Not set'}")
+
 
 # Initialize Typesense client
 typesenseClient = typesense.Client({

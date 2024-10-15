@@ -6,7 +6,6 @@ services:
       - "8080:8080"
     depends_on:
       - typesense
-      - promtail
     env_file:
       - .env
     volumes:
@@ -20,11 +19,3 @@ services:
     volumes:
       - ./data/typesense-data:/data
     command: ["--data-dir", "/data", "--api-key", "YourTypesenseAPIKey", "--listen-port", "8108"]
-
-  promtail:
-    image: grafana/promtail:main
-    volumes:
-      - ./promtail:/etc/promtail
-      - /var/log/myapp:/var/log/myapp
-    command: -config.file=/etc/promtail/config.yaml
-
