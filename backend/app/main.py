@@ -41,3 +41,8 @@ def read_root():
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+@app.get("/divide/{divisor}")
+def divide(divisor: int):
+    result = 1 / divisor
+    return {"result": result}
