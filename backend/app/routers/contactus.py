@@ -1,8 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from app.utils.models import ContactSubmission
 from datetime import datetime
-from app.utils.logger import logger
-# from app.utils.typesense_client import typesenseClient
+from app.utils.typesense_client import typesenseClient
 
 router = APIRouter()
 
@@ -21,15 +20,5 @@ async def submit_contact(submission: ContactSubmission):
             "created_at": int(datetime.utcnow().timestamp())
         }
     }
-    try:
-        logger.info("contact us")
-        # result = typesenseClient.collections['contactus'].documents.create(contact['data'])
-        result = "blah"
-        logger.info(contact)
-        return {"message": "Contact us form submitted successfully", "data": result}
-    except Exception as exc:
-        contact["status"] = "error"
-        contact["error"] = str(exc)
-        logger.error(contact)
-        logger.error("An error in the contact us endpoint has occurred")
-        raise HTTPException(status_code=500, detail=str(exc))
+    result = typesenseClient.collections['contactus'].documents.create(contact['data'])
+    return {"message": "Contact us form submitted successfully", "data": result}
