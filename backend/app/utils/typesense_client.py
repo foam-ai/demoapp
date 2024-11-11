@@ -25,7 +25,7 @@ logger.debug(f"TYPESENSE_ADMIN_API_KEY: {'*' * len(typesense_api_key) if typesen
 # Initialize Typesense client
 typesenseClient = typesense.Client({
     'nodes': [{
-        'host': typesense_host,
+        # 'host': typesense_host,
         'port': typesense_port,
         'protocol': typesense_protocol
     }],
