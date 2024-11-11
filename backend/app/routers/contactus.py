@@ -17,7 +17,7 @@ async def submit_contact(submission: ContactSubmission):
             "email": submission.email,
             "phone_number": submission.phone_number,
             "message": submission.message,
-            "created_at": int(datetime.utcnow().timestamp())
+            "created_at": datetime.utcnow().timestamp()
         }
     }
     result = typesenseClient.collections['contactus'].documents.create(contact['data'])
