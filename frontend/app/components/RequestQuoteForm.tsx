@@ -3,9 +3,10 @@ import axios from 'axios';
 
 interface RequestQuoteFormProps {
   productName: string;
+  onClose?: () => void;
 }
 
-const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName }) => {
+const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClose }) => {
   const [formData, setFormData] = useState({
     product_name: productName,
     condition: 'new',
