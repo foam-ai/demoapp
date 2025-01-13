@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 interface RequestQuoteFormProps {
@@ -19,6 +19,8 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
   });
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
+  console.log('Form close handler is available but not used', onClose );
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
