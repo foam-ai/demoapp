@@ -19,8 +19,6 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
   });
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
-  console.log('Form close handler is available but not used', onClose );
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -43,10 +41,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
         created_at: Math.floor(Date.now() / 1000)
       };
       
-      console.log('Submitting data:', dataToSubmit);
       const response = await axios.post(`${backendUrl}/quotes`, dataToSubmit);
-      
-      console.log('Response:', response);
       
       if (response.status === 200) {
         setFormSuccess('Quote request submitted successfully!');
@@ -55,6 +50,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
       }
     } catch (error) {
       console.error('Submission error:', error);
+      setFormError('An error occurred while submitting the quote request');
     }
   };
 
@@ -87,6 +83,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.email}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
+            required
           />
         </div>
         <div>
@@ -98,6 +95,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.phone_number}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
+            required
           />
         </div>
         <div>
@@ -109,6 +107,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.name}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
+            required
           />
         </div>
         <div>
@@ -120,6 +119,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.company_name}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
+            required
           />
         </div>
         <div>
@@ -141,6 +141,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.zipcode}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
+            required
           />
         </div>
         <div>
