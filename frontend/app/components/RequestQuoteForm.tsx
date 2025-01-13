@@ -45,7 +45,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
         if (onClose) {
           setTimeout(() => {
             onClose();
-          }, 2000);
+          }, 10000);
         }
       } else {
         setFormError('Failed to submit quote request');
