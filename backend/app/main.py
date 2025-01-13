@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import contactus
 from dotenv import load_dotenv
+from sentry_sdk.integrations.fastapi import FastApiIntegration
 
 import sentry_sdk
 
@@ -12,6 +13,9 @@ sentry_sdk.init(
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for tracing.
     traces_sample_rate=1.0,
+    integrations=[
+        FastApiIntegration(),  # Add this line
+    ],
     _experiments={
         # Set continuous_profiling_auto_start to True
         # to automatically start the profiler on when
