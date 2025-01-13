@@ -17,7 +17,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({ product, onClose 
         >
           &times;
         </button>
-        <RequestQuoteForm productName={product.title} onClose={onClose} />
+        <RequestQuoteForm productName={product.title} />
       </div>
     </div>
   );

@@ -42,7 +42,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </button>
       </div>
       {showModal && (
-        <QuoteRequestModal product={product} onClose={() => setShowModal(true)}/>
+        <QuoteRequestModal 
+          product={product} 
+          onClose={() => setShowModal(false)}
+        />
       )}
     </div>
   );
