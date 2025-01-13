@@ -4,7 +4,6 @@ import { ProductData } from '../types';
 
 interface QuoteRequestModalProps {
   product: ProductData;
-  onClose: () => void;
 }
 
 const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({ product }) => {

@@ -3,7 +3,6 @@ import axios from 'axios';
 
 interface RequestQuoteFormProps {
   productName: string;
-  onClose?: () => void;
 }
 
 const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName }) => {
