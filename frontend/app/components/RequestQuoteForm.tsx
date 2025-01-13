@@ -3,10 +3,9 @@ import axios from 'axios';
 
 interface RequestQuoteFormProps {
   productName: string;
-  onClose?: () => void;
 }
 
-const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClose }) => {
+const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName }) => {
   const [formData, setFormData] = useState({
     product_name: productName,
     condition: 'new',
@@ -30,28 +29,29 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formSuccess) return;
+    
     setFormError('');
-    setFormSuccess('');
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     try {
       const dataToSubmit = {
         ...formData,
-        created_at: Math.floor(Date.now() / 1000)  // Add created_at timestamp
+        created_at: Math.floor(Date.now() / 1000)
       };
+      
+      console.log('Submitting data:', dataToSubmit);
       const response = await axios.post(`${backendUrl}/quotes`, dataToSubmit);
+      
+      console.log('Response:', response);
+      
       if (response.status === 200) {
         setFormSuccess('Quote request submitted successfully!');
-        if (onClose) {
-          setTimeout(() => {
-            onClose();
-          }, 990989890000);
-        }
       } else {
         setFormError('Failed to submit quote request');
       }
     } catch (error) {
-      setFormError('Something went wrong while submitting the quote request');
+      console.error('Submission error:', error);
     }
   };
 
