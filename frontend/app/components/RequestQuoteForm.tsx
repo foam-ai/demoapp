@@ -19,6 +19,7 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
   });
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -30,8 +31,11 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formSuccess) return;
     
+    // Don't submit if already submitting or if there's already a success message
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
     setFormError('');
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -45,12 +49,16 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
       
       if (response.status === 200) {
         setFormSuccess('Quote request submitted successfully!');
+        // Reset form data after successful submission if needed
+        // setFormData({...initialFormData});
       } else {
         setFormError('Failed to submit quote request');
       }
     } catch (error) {
       console.error('Submission error:', error);
       setFormError('An error occurred while submitting the quote request');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -83,7 +91,6 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.email}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
-            required
           />
         </div>
         <div>
@@ -95,7 +102,6 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.phone_number}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
-            required
           />
         </div>
         <div>
@@ -107,7 +113,6 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.name}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
-            required
           />
         </div>
         <div>
@@ -119,7 +124,6 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.company_name}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
-            required
           />
         </div>
         <div>
@@ -141,15 +145,17 @@ const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClos
             value={formData.zipcode}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
-            required
           />
         </div>
         <div>
           <button
             type="submit"
-            className="mt-4 w-full p-2 bg-yellow-300 text-black rounded hover:bg-yellow-200"
+            disabled={isSubmitting}
+            className={`mt-4 w-full p-2 bg-yellow-300 text-black rounded hover:bg-yellow-200 ${
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
-            Submit
+            {isSubmitting ? 'Submitting...' : 'Submit'}
           </button>
         </div>
       </form>
