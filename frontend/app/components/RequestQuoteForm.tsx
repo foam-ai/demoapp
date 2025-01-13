@@ -6,7 +6,7 @@ interface RequestQuoteFormProps {
   onClose?: () => void;
 }
 
-const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName, onClose }) => {
+const RequestQuoteForm: React.FC<RequestQuoteFormProps> = ({ productName }) => {
   const [formData, setFormData] = useState({
     product_name: productName,
     condition: 'new',

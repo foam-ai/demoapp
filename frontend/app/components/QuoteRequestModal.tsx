@@ -7,7 +7,7 @@ interface QuoteRequestModalProps {
   onClose: () => void;
 }
 
-const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({ product, onClose }) => {
+const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({ product }) => {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50">
       <div className="relative bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3">
@@ -17,7 +17,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({ product, onClose 
         >
           &times;
         </button>
-        <RequestQuoteForm productName={product.title} onClose={onClose} />
+        <RequestQuoteForm productName={product.title}/>
       </div>
     </div>
   );
