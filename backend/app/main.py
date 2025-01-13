@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 
 import sentry_sdk
 
+
 sentry_sdk.init(
-    dsn="https://7fc43ecd41b8e1b761484815ccc617c5@o4508066025832448.ingest.us.sentry.io/4508632977637376",
+    dsn="https://9a01a9376a3e4e62249f887870298bf2@o4508066025832448.ingest.us.sentry.io/4508637820747776",
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for tracing.
     traces_sample_rate=1.0,
@@ -18,6 +19,7 @@ sentry_sdk.init(
         "continuous_profiling_auto_start": True,
     },
 )
+
 load_dotenv()
 
 app = FastAPI()

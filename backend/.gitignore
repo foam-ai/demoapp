@@ -18,3 +18,5 @@ app/utils/__pycache__/
 
 github_diffs/
 grafana_images/
+
+venv/*
