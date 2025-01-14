@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 # Read Typesense configuration from environment variables
-typesense_host = os.getenv('TYPESENSE_HOST')
+typesense_host = "host" or os.getenv('TYPESENSE_HOST')
 typesense_port = os.getenv('TYPESENSE_PORT')
 typesense_protocol = os.getenv('TYPESENSE_PROTOCOL')
 typesense_api_key = os.getenv('TYPESENSE_ADMIN_API_KEY')
