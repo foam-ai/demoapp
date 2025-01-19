@@ -1,14 +1,10 @@
 import typesense
 import os
-from dotenv import load_dotenv
 import logging
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
-# Load environment variables from .env file (if you're using one)
-load_dotenv()
 
 # Read Typesense configuration from environment variables
 typesense_host = "host"
