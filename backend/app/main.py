@@ -1,7 +1,6 @@
-from app.routers import quotes
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import contactus
+from app.routers import checkout
 from dotenv import load_dotenv
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 
@@ -36,25 +35,4 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-app.include_router(contactus.router)
-app.include_router(quotes.router)
-
-
-@app.head("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-@app.get("/divide/{divisor}")
-def divide(divisor: int):
-    result = 1 / divisor
-    return {"result": result}
-
-@app.get("/sentry-debug")
-async def trigger_error():
-    division_by_zero = 1 / 0
+    
