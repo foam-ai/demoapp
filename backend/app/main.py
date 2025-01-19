@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import checkout
+from app.routers import checkout_router
 from dotenv import load_dotenv
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 
@@ -26,7 +26,7 @@ sentry_sdk.init(
 load_dotenv()
 
 app = FastAPI()
-app.include_router(checkout.router)
+app.include_router(checkout_router)
 
 
 app.add_middleware(
