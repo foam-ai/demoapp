@@ -8,7 +8,7 @@ import sentry_sdk
 
 
 sentry_sdk.init(
-    dsn="https://9a01a9376a3e4e62249f887870298bf2@o4508066025832448.ingest.us.sentry.io/4508637820747776",
+    dsn="https://3b253535b6f12e1507b24d706c738b87@o4508066025832448.ingest.us.sentry.io/4508671357222912",
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for tracing.
     traces_sample_rate=1.0,
