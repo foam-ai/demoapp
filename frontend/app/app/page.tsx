@@ -8,7 +8,6 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string>('')
 
   const handleCheckout = async (cardNumber: string, zipCode: string) => {
-    try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/checkout`, {
         method: 'POST',
         headers: {
@@ -22,9 +21,6 @@ export default function CheckoutPage() {
       } else {
         setError('Sorry, something went wrong with your payment. Please try again.')
       }
-    } catch (error) {
-      setError('Failed to process checkout')
-    }
   }
 
   return (
