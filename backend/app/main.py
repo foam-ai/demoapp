@@ -26,6 +26,7 @@ sentry_sdk.init(
 load_dotenv()
 
 app = FastAPI()
+app.include_router(checkout.router)
 
 
 app.add_middleware(
