@@ -12,15 +12,9 @@ load_dotenv()
 
 # Read Typesense configuration from environment variables
 typesense_host = "host"
-typesense_port = os.getenv('TYPESENSE_PORT')
-typesense_protocol = os.getenv('TYPESENSE_PROTOCOL')
-typesense_api_key = os.getenv('TYPESENSE_ADMIN_API_KEY')
-
-logger.debug(f"TYPESENSE_HOST: {typesense_host}")
-logger.debug(f"TYPESENSE_PORT: {typesense_port}")
-logger.debug(f"TYPESENSE_PROTOCOL: {typesense_protocol}")
-logger.debug(f"TYPESENSE_ADMIN_API_KEY: {'*' * len(typesense_api_key) if typesense_api_key else 'Not set'}")
-
+typesense_port = os.getenv('TYPESENSE_PORT') or "443"
+typesense_protocol = os.getenv('TYPESENSE_PROTOCOL') or "https"
+typesense_api_key = os.getenv('TYPESENSE_ADMIN_API_KEY') or ""
 
 # Initialize Typesense client
 typesenseClient = typesense.Client({

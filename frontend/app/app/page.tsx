@@ -14,16 +14,15 @@ export default function CheckoutPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ cardNumber, zipCode }),
+        body: JSON.stringify({ cardnumber: cardNumber, zipcode: zipCode }),
       })
 
       if (response.ok) {
         window.location.href = '/success'
       } else {
-        const data = await response.json()
-        setError(data.message || 'An error occurred during checkout')
+        setError('Sorry, something went wrong with your payment. Please try again.')
       }
-    } catch (err) {
+    } catch (error) {
       setError('Failed to process checkout')
     }
   }
