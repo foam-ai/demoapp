@@ -11,7 +11,7 @@ export default function SuccessPage() {
         </h1>
         
         <p className="text-gray-600 mb-8">
-          We've received your order and will process it right away.
+          We&apos;ve received your order and will process it right away.
         </p>
 
         <div className="space-y-4">
