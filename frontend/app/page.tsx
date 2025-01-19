@@ -8,7 +8,7 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string>('')
 
   const handleCheckout = async (cardNumber: string, zipCode: string) => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/checkout`, {
+      const response = await fetch('https://demoapp-ou94.vercel.app/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
