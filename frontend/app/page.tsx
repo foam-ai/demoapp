@@ -32,8 +32,8 @@ export default function CheckoutPage() {
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
         <div className="text-center mb-8">
           <Image
-            src="/hat.png"
-            alt="Hat"
+            src="/tennis.png"
+            alt="Tennis"
             width={300}
             height={300}
             className="mx-auto rounded-lg"
