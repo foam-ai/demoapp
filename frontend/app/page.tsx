@@ -30,6 +30,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           cardnumber: formData.cardNumber,
           zipcode: formData.zipCode,
+          cvc: formData.cvc,
           firstName: formData.firstName,
           lastName: formData.lastName,
           street: formData.shippingStreet,
