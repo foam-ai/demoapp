@@ -4,7 +4,7 @@ import { useState } from 'react'
 import CheckoutForm from '../components/CheckoutForm'
 import ErrorMessage from '../components/ErrorMessage'
 import Image from 'next/image'
-import * as Sentry from '@sentry/node';
+import * as Sentry from '@sentry/nextjs';
 
 export default function CheckoutPage() {
   const [error, setError] = useState<string>('')
