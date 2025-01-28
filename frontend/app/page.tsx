@@ -32,10 +32,11 @@ export default function CheckoutPage() {
           cvc: formData.cvc,
           firstName: formData.firstName,
           lastName: formData.lastName,
-          street: formData.shippingStreet,
-          city: formData.shippingCity,
-          state: formData.shippingState,
-          method: formData.shippingMethod
+          shippingStreet: formData.shippingStreet,
+          shippingCity: formData.shippingCity,
+          shippingState: formData.shippingState,
+          shippingZipCode: formData.shippingZipCode,
+          shippingMethod: formData.shippingMethod
         }),
       })
 
