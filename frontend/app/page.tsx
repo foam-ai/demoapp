@@ -4,7 +4,6 @@ import { useState } from 'react'
 import CheckoutForm from '../components/CheckoutForm'
 import ErrorMessage from '../components/ErrorMessage'
 import Image from 'next/image'
-import * as Sentry from '@sentry/nextjs';
 
 export default function CheckoutPage() {
   const [error, setError] = useState<string>('')
@@ -43,13 +42,10 @@ export default function CheckoutPage() {
       if (response.ok) {
         window.location.href = '/success'
       } else {
-        const errorMessage = await response.json()
         setError('Sorry, something went wrong with your payment. Please try again.')
-        Sentry.captureException(errorMessage)
       }
     } catch (error) {
       setError('Sorry, something went wrong with your payment. Please try again.')
-      Sentry.captureException(error)
     }
   }
 
