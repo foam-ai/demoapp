@@ -47,7 +47,7 @@ export default function CheckoutPage() {
         throw new Error(responseData.message)
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'An unexpected error occurred')
+      setError('Failed to process your payment. Please try again.')
       Sentry.captureException(error)
     }
   }
