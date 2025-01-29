@@ -4,6 +4,7 @@ import { useState } from 'react'
 import CheckoutForm from '../components/CheckoutForm'
 import ErrorMessage from '../components/ErrorMessage'
 import Image from 'next/image'
+import * as Sentry from '@sentry/nextjs'
 
 export default function CheckoutPage() {
   const [error, setError] = useState<string>('')
@@ -20,8 +21,9 @@ export default function CheckoutPage() {
     shippingZipCode: string
     shippingMethod: string
   }) => {
+    let response;
     try {
-      const response = await fetch('https://demoapp-y43d.onrender.com/checkout', {
+      response = await fetch('https://demoapp-y43d.onrender.com/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,16 +40,15 @@ export default function CheckoutPage() {
           shippingMethod: formData.shippingMethod
         }),
       })
-
-      if (response.ok) {
-        window.location.href = '/success'
-      } else {
-        setError('We were unable to process your payment. Please verify payment information and try again.')
-      }
     } catch (error) {
       setError('We were unable to process your payment. Please verify payment information and try again.')
+      throw new Error('Required to send shippingZipCode to checkout endpoint')
     }
-  }
+
+      if (response?.ok) {
+        window.location.href = '/success'
+      }
+}
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
