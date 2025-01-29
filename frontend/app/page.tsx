@@ -21,7 +21,6 @@ export default function CheckoutPage() {
     shippingZipCode: string
     shippingMethod: string
   }) => {
-    try {
       const response = await fetch('https://demoapp-y43d.onrender.com/checkout', {
         method: 'POST',
         headers: {
@@ -39,13 +38,20 @@ export default function CheckoutPage() {
           shippingMethod: formData.shippingMethod
         }),
       })
+
       if (response?.ok) {
         window.location.href = '/success'
+      } else {
+        const errorData = await response.json()
+        setError(errorData.message)
+        Sentry.captureException(new Error(errorData.message), {
+          extra: {
+            statusCode: response.status,
+            errorData
+          }
+        })
       }
-    } catch (error) {
-      throw new Error('Missing shippingZipCode field in checkout request')
-    }
-}
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
