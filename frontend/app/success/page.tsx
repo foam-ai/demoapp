@@ -23,7 +23,7 @@ const SuccessPage = () => {
           </h1>
           
           <p className="text-lg text-gray-600 mb-8">
-            Thank you for your purchase. We'll send you a confirmation email shortly.
+            Thank you for your purchase. We&apos;ll send you a confirmation email shortly.
           </p>
 
           {/* Order details card */}
