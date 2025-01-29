@@ -19,7 +19,7 @@ async def submit_checkout(checkout: Dict):
                 "data": result
             }
         )
-        
+
     except Exception as e:
         return JSONResponse(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
