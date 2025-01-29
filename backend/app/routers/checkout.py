@@ -1,6 +1,9 @@
 from fastapi import APIRouter, Response
 from app.utils.typesense_client import typesenseClient
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -15,9 +18,9 @@ async def submit_checkout(checkout: dict):
             "success": True
         }
     except Exception as e:
-        return Response(
-            status_code=500,
-            content={"message": str(e), "success": False},
-            media_type="application/json"
-        )
-
+        logger.error(f"Error submitting checkout: {e}")
+        return {
+            "message": str(e),
+            "data": None,
+            "success": False
+        }
