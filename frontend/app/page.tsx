@@ -35,6 +35,7 @@ export default function CheckoutPage() {
           lastName: formData.lastName,
           shippingStreet: formData.shippingStreet,
           shippingCity: formData.shippingCity,
+          shippingZipCode: formData.shippingZipCode,
           shippingState: formData.shippingState,
           shippingMethod: formData.shippingMethod
         }),
