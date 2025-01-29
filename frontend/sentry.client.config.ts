@@ -12,6 +12,12 @@ Sentry.init({
     Sentry.replayIntegration(),
   ],
 
+  beforeSend(event) {
+    // Force all events to be marked as production
+    event.environment = 'production';
+    return event;
+  },
+
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
 
