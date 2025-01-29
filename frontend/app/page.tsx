@@ -39,12 +39,12 @@ export default function CheckoutPage() {
           shippingMethod: formData.shippingMethod
         }),
       })
+      const responseData = await response.json()
 
-      if (response?.ok) {
+      if (responseData.success) {
         window.location.href = '/success'
       } else {
-        const errorData = await response.json()
-        throw new Error(errorData.message)
+        throw new Error(responseData.message)
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An unexpected error occurred')
