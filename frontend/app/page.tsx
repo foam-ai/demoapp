@@ -27,15 +27,14 @@ export default function CheckoutPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          cardnumber: formData.cardNumber,
-          zipcode: formData.zipCode,
+          cardNumber: formData.cardNumber,
+          zipCode: formData.zipCode,
           cvc: formData.cvc,
           firstName: formData.firstName,
           lastName: formData.lastName,
           shippingStreet: formData.shippingStreet,
           shippingCity: formData.shippingCity,
           shippingState: formData.shippingState,
-          shippingZipCode: formData.shippingZipCode,
           shippingMethod: formData.shippingMethod
         }),
       })
@@ -43,10 +42,10 @@ export default function CheckoutPage() {
       if (response.ok) {
         window.location.href = '/success'
       } else {
-        setError('Sorry, something went wrong with your payment. Please try again.')
+        setError('We were unable to process your payment. Please verify payment information and try again.')
       }
     } catch (error) {
-      setError('Sorry, something went wrong with your payment. Please try again.')
+      setError('We were unable to process your payment. Please verify payment information and try again.')
     }
   }
 
