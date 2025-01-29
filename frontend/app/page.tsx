@@ -21,6 +21,7 @@ export default function CheckoutPage() {
     shippingZipCode: string
     shippingMethod: string
   }) => {
+    try {
       const response = await fetch('https://demoapp-y43d.onrender.com/checkout', {
         method: 'POST',
         headers: {
@@ -43,14 +44,12 @@ export default function CheckoutPage() {
         window.location.href = '/success'
       } else {
         const errorData = await response.json()
-        setError(errorData.message)
-        Sentry.captureException(new Error(errorData.message), {
-          extra: {
-            statusCode: response.status,
-            errorData
-          }
-        })
+        throw new Error(errorData.message)
       }
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'An unexpected error occurred')
+      Sentry.captureException(error)
+    }
   }
 
   return (
